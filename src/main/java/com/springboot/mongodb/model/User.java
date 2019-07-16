@@ -2,7 +2,22 @@ package com.springboot.mongodb.model;
 
 import java.util.Objects;
 
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonIgnore;
+import org.bson.types.ObjectId;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class User {
+
+	@JsonProperty("_id")
+	@BsonIgnore
+	private String id;
+
+	@BsonId
+	@JsonIgnore
+	private ObjectId oid;
 
 	private String firstName;
 	private String lastName;
@@ -16,6 +31,18 @@ public class User {
 
 	public User(String firstName, String lastName, String dateOfBirth, int age, double salary) {
 		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dateOfBirth = dateOfBirth;
+		this.age = age;
+		this.salary = salary;
+	}
+
+	public User(String id, ObjectId oid, String firstName, String lastName, String dateOfBirth, int age,
+			double salary) {
+		super();
+		this.id = id;
+		this.oid = oid;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.dateOfBirth = dateOfBirth;
@@ -119,6 +146,36 @@ public class User {
 		return age == other.age && Objects.equals(dateOfBirth, other.dateOfBirth)
 				&& Objects.equals(firstName, other.firstName) && Objects.equals(lastName, other.lastName)
 				&& Double.doubleToLongBits(salary) == Double.doubleToLongBits(other.salary);
+	}
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
+		this.oid = new ObjectId(this.id);
+	}
+
+	/**
+	 * @return the oid
+	 */
+	public ObjectId getOid() {
+		return oid;
+	}
+
+	/**
+	 * @param oid the oid to set
+	 */
+	public void setOid(ObjectId oid) {
+		this.oid = oid;
+		this.id = oid.toHexString();
 	}
 
 }

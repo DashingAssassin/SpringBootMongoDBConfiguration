@@ -1,5 +1,10 @@
 package com.springboot.mongodb.configuration.customcodec;
 
+/**
+ * This class StringObjectIdCodec will be used when converting from DAO object to
+ * Java Object so that conversion of ObjectId to String and String to Object Id is without 
+ * and exception
+ */
 import org.bson.BsonReader;
 import org.bson.BsonWriter;
 import org.bson.codecs.Codec;
